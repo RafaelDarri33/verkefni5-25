@@ -9,7 +9,13 @@ export default async function FrettirPage() {
   let frettir: Frett[] = [];
 
   try {
-    frettir = await getAllFrettir();
+    const result = await getAllFrettir();
+
+    if (Array.isArray(result)) {
+      frettir = result;
+    } else {
+      console.warn("getAllFrettir skilaði engu eða röngu");
+    }
   } catch (error) {
     console.error("Villa við að sækja fréttir:", error);
   }
@@ -17,7 +23,7 @@ export default async function FrettirPage() {
   return (
     <main>
       <h1>Fréttir</h1>
-      {frettir.length > 0 ? (
+      {Array.isArray(frettir) && frettir.length > 0 ? (
         <ul>
           {frettir.map((frett) => (
             <li key={frett.slug}>
