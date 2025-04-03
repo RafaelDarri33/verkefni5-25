@@ -1,12 +1,6 @@
-import { getFrettBySlug, Frett } from "@/lib/datocms"; 
+import { getFrettBySlug, Frett } from "@/lib/datocms";
 
-type Props = {
-  params: {
-    slug: string;
-  };
-};
-
-export default async function FrettPage({ params }: Props) {
+export default async function FrettPage({ params }: { params: { slug: string } }) {
   const frett: Frett | null = await getFrettBySlug(params.slug);
 
   if (!frett) {
@@ -24,4 +18,3 @@ export default async function FrettPage({ params }: Props) {
     </main>
   );
 }
-
