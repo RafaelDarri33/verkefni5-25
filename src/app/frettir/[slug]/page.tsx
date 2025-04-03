@@ -1,9 +1,4 @@
-import { getFrettBySlug } from "@/lib/datocms";
-
-type Frett = {
-  title: string;
-  content: string;
-};
+import { getFrettBySlug, Frett } from "@/lib/datocms"; 
 
 type Props = {
   params: {
