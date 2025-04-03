@@ -1,5 +1,10 @@
 import { getFrettBySlug } from "@/lib/datocms";
 
+type Frett = {
+  title: string;
+  content: string;
+};
+
 type Props = {
   params: {
     slug: string;
@@ -7,10 +12,14 @@ type Props = {
 };
 
 export default async function FrettPage({ params }: Props) {
-  const frett = await getFrettBySlug(params.slug);
+  const frett: Frett | null = await getFrettBySlug(params.slug);
 
   if (!frett) {
-    return <main><p>Frett fannst ekki!</p></main>;
+    return (
+      <main>
+        <p>Frett fannst ekki!</p>
+      </main>
+    );
   }
 
   return (
@@ -20,3 +29,4 @@ export default async function FrettPage({ params }: Props) {
     </main>
   );
 }
+
