@@ -1,6 +1,23 @@
 const API_URL = "https://graphql.datocms.com/";
 
-export async function getHomePage() {
+export type HomePage = {
+  title: string;
+  content: string;
+};
+
+export type Frett = {
+  title: string;
+  content: string;
+};
+
+export type FrettPreview = {
+  title: string;
+  slug: string;
+};
+
+// === Föll ===
+
+export async function getHomePage(): Promise<HomePage> {
   const query = `
     {
       homePage {
@@ -24,7 +41,7 @@ export async function getHomePage() {
   return data.data.homePage;
 }
 
-export async function getAllFrettir() {
+export async function getAllFrettir(): Promise<FrettPreview[]> {
   const query = `
     {
       allFretts {
@@ -48,7 +65,7 @@ export async function getAllFrettir() {
   return data.data.allFretts;
 }
 
-export async function getFrettBySlug(slug: string) {
+export async function getFrettBySlug(slug: string): Promise<Frett | null> {
   const query = `
     query FrettBySlug($slug: String) {
       frett(filter: {slug: {eq: $slug}}) {
@@ -71,5 +88,8 @@ export async function getFrettBySlug(slug: string) {
   });
 
   const data = await res.json();
+
+  if (!data.data.frett) return null;
+
   return data.data.frett;
 }
