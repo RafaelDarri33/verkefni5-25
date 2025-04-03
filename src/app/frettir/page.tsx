@@ -6,18 +6,29 @@ type Frett = {
 };
 
 export default async function FrettirPage() {
-  const frettir: Frett[] = await getAllFrettir();
+  let frettir: Frett[] = [];
+
+  try {
+    frettir = await getAllFrettir();
+  } catch (error) {
+    console.error("Villa við að sækja fréttir:", error);
+  }
 
   return (
     <main>
       <h1>Fréttir</h1>
-      <ul>
-        {frettir.map((frett: Frett) => (
-          <li key={frett.slug}>
-            <a href={`/frettir/${frett.slug}`}>{frett.title}</a>
-          </li>
-        ))}
-      </ul>
+      {frettir.length > 0 ? (
+        <ul>
+          {frettir.map((frett) => (
+            <li key={frett.slug}>
+              <a href={`/frettir/${frett.slug}`}>{frett.title}</a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>Engar fréttir fundust.</p>
+      )}
     </main>
   );
 }
+
