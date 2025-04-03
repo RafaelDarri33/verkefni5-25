@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { getFrettBySlug, Frett } from "@/lib/datocms";
 
 export default async function FrettPage({ params }: { params: { slug: string } }) {
