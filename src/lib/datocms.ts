@@ -15,7 +15,7 @@ export type FrettPreview = {
   slug: string;
 };
 
-export async function getHomePage(): Promise<HomePage> {
+export async function getHomePage(): Promise<HomePage | null> {
   const query = `
     {
       homePage {
@@ -25,7 +25,7 @@ export async function getHomePage(): Promise<HomePage> {
     }
   `;
 
-  const res = await fetch(API_URL, {
+  const res = await fetch("https://graphql.datocms.com/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -36,8 +36,15 @@ export async function getHomePage(): Promise<HomePage> {
   });
 
   const data = await res.json();
+
+  // Þetta verndar
+  if (!data?.data?.homePage) {
+    return null;
+  }
+
   return data.data.homePage;
 }
+
 
 export async function getAllFrettir(): Promise<FrettPreview[]> {
   const query = `
