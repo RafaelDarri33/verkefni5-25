@@ -15,8 +15,6 @@ export type FrettPreview = {
   slug: string;
 };
 
-// === Föll ===
-
 export async function getHomePage(): Promise<HomePage> {
   const query = `
     {
